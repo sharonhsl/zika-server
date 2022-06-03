@@ -44,11 +44,20 @@ function() {
 #* Return a k-test statistics within a window
 #* @param window The week to snapshot infected cases
 #* @get /k-test
-function(window) {
-  edges <- read.csv("data/flight_salient_edges.csv", stringsAsFactors = F) 
-  cases <- read.csv("data/flight_cases.csv", stringsAsFactors = F)
-  cases$state <- ifelse(cases$start_week < window, 1, 0)
-  cases$name <- cases$Aggregate_ID
+function(type, window) {
+  if(type == "fs") {
+    edges <- read.csv("data/flight_salient_edges.csv", stringsAsFactors = F) 
+    cases <- read.csv("data/flight_cases.csv", stringsAsFactors = F)   
+  } else if(type == "ps") {
+    edges <- read.csv("data/phone_salient_edges.csv", stringsAsFactors = F) 
+    cases <- read.csv("data/phone_cases.csv", stringsAsFactors = F)   
+  }else {
+    edges <- read.csv("data/flight_salient_edges.csv", stringsAsFactors = F) 
+    cases <- read.csv("data/flight_cases.csv", stringsAsFactors = F) 
+  }
+
+  cases$state <- ifelse(cases$arrival < window, 1, 0)
+  cases$name <- cases$id
   net <- graph.data.frame(edges, directed = F)
   V(net)$state <- as.integer(cases$state[match(V(net)$name,cases$name)])
   test <- k.test(net,k=1,type="both",bin="full",iterations=20)

@@ -1,4 +1,4 @@
-Year,CDC_EPIWK,sum,CCNCT,Aggregate_ID,start_week
+Year,CDC_EPIWK,sum,CCNCT,id,arrival
 2015,42,3,13430,84,42
 2015,43,1,13600,150,43
 2016,6,1,13655,87,55
