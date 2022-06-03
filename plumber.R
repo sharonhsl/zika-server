@@ -1,6 +1,5 @@
 # plumber.R
 source("Cluster.test.source.parallel.R")
-library("igraph")
 
 #* @filter cors
 cors <- function(res) {
